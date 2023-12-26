@@ -22,7 +22,7 @@ export const connectToDataBase= async () =>{
 
 const MONGODB_URI = "mongodb+srv://user:user@cluster0.6zcerbm.mongodb.net/app_event";
 
-async function connectToDataBase() {
+export const connectToDataBase=async ()=> {
   try {
     
     await mongoose.connect(MONGODB_URI);
@@ -41,4 +41,3 @@ async function connectToDataBase() {
   }
 }
 
-export default connectToDataBase;
