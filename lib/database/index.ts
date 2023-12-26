@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 let cachedConnection = (global as any).mongoose || {conn:null , promise: null};
 
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = "mongodb+srv://user:user@cluster0.6zcerbm.mongodb.net";
 export const connectToDataBase= async () =>{
     if(cachedConnection.conn){
         return cachedConnection.conn;
