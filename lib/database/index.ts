@@ -23,9 +23,9 @@ export const connectToDataBase= async () =>{
 const MONGODB_URI = "mongodb+srv://user:user@cluster0.6zcerbm.mongodb.net/app_event";
 
 export const connectToDataBase=async ()=> {
-  try {
-    
-    await mongoose.connect(MONGODB_URI);
+  
+try {
+    await mongoose.connect("mongodb+srv://user:user@cluster0.6zcerbm.mongodb.net/app_event");
 
     const db = mongoose.connection;
     mongoose.set("strictQuery", true);
