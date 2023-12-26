@@ -1,15 +1,14 @@
 "use client"
 
-
-
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { createEvent } from "@/lib/actions/event.actions"
 import { IEvent } from "@/lib/database/models/event.model"
+import { useUploadThing } from "@/lib/uploadthing"
 import { eventFormSchema } from "@/lib/validators"
 import { zodResolver } from "@hookform/resolvers/zod"
-
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -39,10 +38,13 @@ type EventFormProps = {
     }
     : eventDefaultValues;
 
+    const { startUpload } = useUploadThing('imageUploader')
+
   const router = useRouter();
+
   async function onSubmit(values: z.infer<typeof eventFormSchema>) {
     let uploadedImageUrl = values.imageUrl;
-    console.log(values)
+    console.log(userId)
     if(files.length > 0) {
       const uploadedImages = await startUpload(files)
 
@@ -53,9 +55,11 @@ type EventFormProps = {
       uploadedImageUrl = uploadedImages[0].url
     }
 
+
+
     if(type === 'Create') {
       try {
-      /*  const newEvent = await createEvent({
+        const newEvent = await createEvent({
           event: { ...values, imageUrl: uploadedImageUrl },
           userId,
           path: '/profile'
@@ -64,7 +68,7 @@ type EventFormProps = {
         if(newEvent) {
           form.reset();
           router.push(`/events/${newEvent._id}`)
-        }*/
+        }
         //console.log(values)
       } catch (error) {
         console.log(error);

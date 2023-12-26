@@ -2,10 +2,10 @@ import { auth } from "@clerk/nextjs";
 import EventForm from "../../../../components/shared/EventForm";
 
 const page = () => {
-    const { sessionClaims } = auth();
-  
-    const userId = sessionClaims?.userId as string;
-  
+    const { userId } = auth();
+    
+    //const userId = sessionClaims?.userId as string;
+    console.log("userid: " +userId)
     return (
       <>
         <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
@@ -13,7 +13,7 @@ const page = () => {
         </section>
   
         <div className="wrapper my-8">
-          <EventForm userId={userId} type="Create" />
+          <EventForm userId={`${userId}`} type="Create" />
         </div>
       </>
     )
