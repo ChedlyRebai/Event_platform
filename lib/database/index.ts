@@ -6,7 +6,7 @@ const MONGODB_URI = "mongodb+srv://user:user@cluster0.6zcerbm.mongodb.net/?retry
 
 let isConnected = false; // Variable to track the connection status
 
-export const connectToDataBase = async () => {
+export const connectToDatabase = async () => {
   // Set strict query mode for Mongoose to prevent unknown field queries.
   mongoose.set("strictQuery", true);
 

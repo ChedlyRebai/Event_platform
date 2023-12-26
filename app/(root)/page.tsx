@@ -3,28 +3,13 @@ import { Button } from "@/components/ui/button"
 
 import Image from "next/image"
 import Link from "next/link"
-import { connectToDataBase } from "../../lib/database"
-import User from "../../lib/database/models/user.model"
+
 
 
 
 const page = () => {
   
 
-  const createUser = async () => {
-   let creatuser={
-    clerkId:"aaaa",
-    email:"aaaa",
-    firstName:"aaaa",
-    lastName:"aaaa",
-    photo:"aaaa",
-    username:"aaaa",
-   }
-   await connectToDataBase()
-   User.create(creatuser).then((res)=>{
-      console.log(res);
-    })  
-  }
   
   
   return (
@@ -36,7 +21,7 @@ const page = () => {
             <p className="p-regular-20 md:p-regular-24">Book and learn helpful tips from 3,168+ mentors in world-class companies with our global community.</p>
             <Button size="lg" asChild className="button w-full sm:w-fit">
               <Link href="#events">
-                Explore Now
+                E xplore Now
               </Link>
             </Button>
           </div>
