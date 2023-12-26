@@ -2,27 +2,23 @@
 
 
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import Image from "next/image"
-import { useState } from "react"
-
-import { useForm } from "react-hook-form"
-import * as z from 'zod'
-
-
-import { IEvent } from "@/lib/database/models/event.model"
-
-
-import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-
 import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import { IEvent } from "@/lib/database/models/event.model"
 import { eventFormSchema } from "@/lib/validators"
-import { Checkbox } from "@radix-ui/react-checkbox"
+import { zodResolver } from "@hookform/resolvers/zod"
+
+import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { useState } from "react"
+import DatePicker from "react-datepicker"
 import "react-datepicker/dist/react-datepicker.css"
+import { useForm } from "react-hook-form"
+import * as z from 'zod'
 import { eventDefaultValues } from "../../constant"
+import { Checkbox } from "../ui/checkbox"
 import Dropdown from "./DropDown"
 import FileUploader from "./FileUploader"
 
@@ -48,13 +44,13 @@ type EventFormProps = {
     let uploadedImageUrl = values.imageUrl;
     console.log(values)
     if(files.length > 0) {
-     /* const uploadedImages = await startUpload(files)
+      const uploadedImages = await startUpload(files)
 
       if(!uploadedImages) {
         return
       }
 
-      uploadedImageUrl = uploadedImages[0].url*/
+      uploadedImageUrl = uploadedImages[0].url
     }
 
     if(type === 'Create') {
@@ -210,14 +206,15 @@ type EventFormProps = {
                             className="filter-grey"
                           />
                           <p className="ml-3 whitespace-nowrap text-grey-600">Start Date:</p>
-                          {/* <DatePicker 
+                           <DatePicker 
                             selected={field.value} 
                             onChange={(date: Date) => field.onChange(date)} 
                             showTimeSelect
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy h:mm aa"
                             wrapperClassName="datePicker"
-                          /> */}
+                          /> 
+                          
                         </div>
     
                       </FormControl>
@@ -241,14 +238,14 @@ type EventFormProps = {
                             className="filter-grey"
                           />
                           <p className="ml-3 whitespace-nowrap text-grey-600">End Date:</p>
-                          {/* <DatePicker 
+                           <DatePicker 
                             selected={field.value} 
                             onChange={(date: Date) => field.onChange(date)} 
                             showTimeSelect
                             timeInputLabel="Time:"
                             dateFormat="MM/dd/yyyy h:mm aa"
                             wrapperClassName="datePicker"
-                          /> */}
+                          /> 
                         </div>
     
                       </FormControl>
@@ -275,26 +272,25 @@ type EventFormProps = {
                           />
                           <Input type="number" placeholder="Price" {...field} className="p-regular-16 border-0 bg-grey-50 outline-offset-0 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0" />
                           <FormField
-                            control={form.control}
-                            name="isFree"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormControl>
-                                  <div className="flex items-center">
-                                    <label htmlFor="isFree" className="whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Free Ticket</label>
-                                    <Checkbox
-                                      onCheckedChange={field.onChange}
-                                      checked={field.value}
-                                    id="isFree" className="mr-2 h-5 w-5 border-2 border-primary-500" />
-                                  </div>
-              
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />   
+                        control={form.control}
+                        name="isFree"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormControl>
+                              <div className="flex items-center">
+                                <label htmlFor="isFree" className="whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Free Ticket</label>
+                                <Checkbox
+                                  onCheckedChange={field.onChange}
+                                  checked={field.value}
+                                id="isFree" className="mr-2 h-5 w-5 border-2 border-primary-500" />
+                              </div>
+          
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />   
                         </div>
-    
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -313,7 +309,6 @@ type EventFormProps = {
                             width={24}
                             height={24}
                           />
-    
                           <Input placeholder="URL" {...field} className="input-field" />
                         </div>
     

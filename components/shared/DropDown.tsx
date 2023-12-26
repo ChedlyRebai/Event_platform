@@ -1,3 +1,5 @@
+
+
 import {
     AlertDialog,
     AlertDialogAction,
@@ -14,10 +16,11 @@ import {
     SelectContent,
     SelectItem,
     SelectTrigger,
-    SelectValue,
+    SelectValue
 } from "@/components/ui/select"
+import { createCategory, getAllCategories } from "@/lib/actions/category.actions"
 import { ICategory } from "@/lib/database/models/category.model"
-import { startTransition, useState } from "react"
+import { startTransition, useEffect, useState } from "react"
 import { Input } from "../ui/input"
  
   
@@ -27,30 +30,41 @@ import { Input } from "../ui/input"
   }
   
   const Dropdown = ({ value, onChangeHandler }: DropdownProps) => {
-    const [categories, setCategories] = useState<ICategory[]>([
-        { _id:'1' ,  name:"cat1"},
-        { _id:'2' ,  name:"cat2"}
-    ])
+    const [categories, setCategories] = useState<ICategory[]>([])
     const [newCategory, setNewCategory] = useState('');
   
     const handleAddCategory = () => {
-      
+        createCategory({
+            categoryName: newCategory
+        }).then((res) => {
+            setCategories((prevstate)=> [...prevstate,res])
+        }).catch((err) => {
+            console.log(err)
+        })
     }
+
+    useEffect(()=>{
+        const getCategories=async()=>{
+            const categorieslist = await getAllCategories() ;
+            categorieslist && setCategories(categorieslist as ICategory[])
+        }
+        getCategories()
+    },[])
+
+
   
     return (
       <Select onValueChange={onChangeHandler} defaultValue={value}>
         <SelectTrigger className="select-field">
           <SelectValue placeholder="Category" />
         </SelectTrigger>
-        <SelectContent>export default
+        <SelectContent>
           
-            <SelectItem  value={"aa"} className="select-item p-regular-14">
-              aaa
-            </SelectItem>
-
-            <SelectItem  value={"aasasa"} className="select-item p-regular-14">
-              aaasasa
-            </SelectItem>
+        {categories.length > 0 && categories.map((category) => (
+          <SelectItem key={category._id} value={category._id} className="select-item p-regular-14">
+            {category.name}
+          </SelectItem>
+        ))}
          
   
           <AlertDialog>
