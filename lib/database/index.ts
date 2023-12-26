@@ -1,10 +1,34 @@
 import mongoose from 'mongoose';
 
-let cachedConnection = (global as any).mongoose || {conn:null , promise: null};
+//let cachedConnection = (global as any).mongoose || {conn:null , promise: null};
 
 const MONGODB_URI = "mongodb+srv://user:user@cluster0.6zcerbm.mongodb.net/?retryWrites=true&w=majority";
-export const connectToDataBase= async () =>{
-    
+
+let isConnected = false; // Variable to track the connection status
+
+export const connectToDataBase = async () => {
+  // Set strict query mode for Mongoose to prevent unknown field queries.
+  mongoose.set("strictQuery", true);
+
+ 
+  // If the connection is already established, return without creating a new connection.
+  if (isConnected) {
+    console.log("MongoDB connection already established");
+    return;
+  }
+
+  try {
+    await mongoose.connect("mongodb+srv://user:user@cluster0.6zcerbm.mongodb.net/event");
+
+    isConnected = true; // Set the connection status to true
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+/*export const connectToDataBase= async () =>{
+
     if(cachedConnection.conn){
         return cachedConnection.conn;
     }
@@ -18,7 +42,7 @@ export const connectToDataBase= async () =>{
 
     cachedConnection.conn =await cachedConnection.promise;
     return cachedConnection.conn;
-}
+}*/
 
 
 // const MONGODB_URI = "mongodb+srv://user:user@cluster0.6zcerbm.mongodb.net/app_event";

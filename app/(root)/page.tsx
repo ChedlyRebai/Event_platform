@@ -1,13 +1,32 @@
+
 import { Button } from "@/components/ui/button"
 
 import Image from "next/image"
 import Link from "next/link"
+import { connectToDataBase } from "../../lib/database"
+import User from "../../lib/database/models/user.model"
 
 
 
 const page = () => {
   
 
+  const createUser = async () => {
+   let creatuser={
+    clerkId:"aaaa",
+    email:"aaaa",
+    firstName:"aaaa",
+    lastName:"aaaa",
+    photo:"aaaa",
+    username:"aaaa",
+   }
+   await connectToDataBase()
+   User.create(creatuser).then((res)=>{
+      console.log(res);
+    })  
+  }
+  
+  
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-contain py-5 md:py-10">
