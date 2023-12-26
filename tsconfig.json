@@ -18,10 +18,16 @@
         "name": "next"
       }
     ],
+
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": ["./*"],
+      
       "@/types/*": ["./types/*"],
       "@/lib/*": ["./lib/*"],
+      "@/utils":["./utils.ts"],
+      "@/components/*": ["./components/*"],
+      "@/src/*": ["./src/*"],
+      "@/constants/*": ["./constants/*"],
       
     }
   },
