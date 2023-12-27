@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { createEvent } from "@/lib/actions/event.actions"
+import { createEvent, updateEvent } from "@/lib/actions/event.actions"
 import { IEvent } from "@/lib/database/models/event.model"
 import { useUploadThing } from "@/lib/uploadthing"
 import { eventFormSchema } from "@/lib/validators"
@@ -82,7 +82,7 @@ type EventFormProps = {
       }
 
       try {
-       /* const updatedEvent = await updateEvent({
+        const updatedEvent = await updateEvent({
           userId,
           event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
           path: `/events/${eventId}`
@@ -91,7 +91,7 @@ type EventFormProps = {
         if(updatedEvent) {
           form.reset();
           router.push(`/events/${updatedEvent._id}`)
-        }*/
+        }
       } catch (error) {
         console.log(error);
       }
