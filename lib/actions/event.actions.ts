@@ -16,7 +16,6 @@ import {
     GetRelatedEventsByCategoryParams,
     UpdateEventParams,
 } from '@/types'
-import { getIdByClerkId } from './user.actions'
 
 const getCategoryByName = async (name: string) => {
   return Category.findOne({ name: { $regex: name, $options: 'i' } })
@@ -32,14 +31,13 @@ const populateEvent = (query: any) => {
 export async function createEvent({ userId, event, path }: CreateEventParams) {
   try {
     await connectToDatabase()
-    const organizer = await User.findOne({clerkId:userId})
 
+    const organizer = await User.findById(userId)
     if (!organizer) throw new Error('Organizer not found')
 
-    const newEvent = await Event.create({ ...event, category: event.categoryId, organizer: organizer._id })
+    const newEvent = await Event.create({ ...event, category: event.categoryId, organizer: userId })
     revalidatePath(path)
 
-    //return JSON.parse(JSON.stringify(newEvent))
     return JSON.parse(JSON.stringify(newEvent))
   } catch (error) {
     handleError(error)
@@ -67,12 +65,7 @@ export async function updateEvent({ userId, event, path }: UpdateEventParams) {
     await connectToDatabase()
 
     const eventToUpdate = await Event.findById(event._id)
-    console.log(eventToUpdate)
-    console.log(userId)
-    const currentUser=await getIdByClerkId(userId)
-    console.log(currentUser)
-    console.log(eventToUpdate.organizer.toHexString())
-    if (!eventToUpdate || eventToUpdate.organizer.toHexString() !== currentUser) {
+    if (!eventToUpdate || eventToUpdate.organizer.toHexString() !== userId) {
       throw new Error('Unauthorized or event not found')
     }
 

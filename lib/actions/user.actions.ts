@@ -6,9 +6,9 @@ import { connectToDatabase } from '@/lib/database'
 import Event from '@/lib/database/models/event.model'
 import Order from '@/lib/database/models/order.model'
 import User from '@/lib/database/models/user.model'
-import { handleError } from '@/utils'
+import { handleError } from '@/lib/utils'
 
-import { CreateUserParams, UpdateUserParams } from '@/types/index'
+import { CreateUserParams, UpdateUserParams } from '@/types'
 
 export async function createUser(user: CreateUserParams) {
   try {
@@ -21,25 +21,14 @@ export async function createUser(user: CreateUserParams) {
   }
 }
 
-export async function getIdByClerkId(Id: string) {
-  try {
-    await connectToDatabase()
-
-    const user = await User.findOne({ clerkId: Id })
-
-    if (!user) throw new Error('User not found')
-    return user._id.toString()
-  } catch (error) {
-    handleError(error)
-  }
-}
-
 export async function getUserById(userId: string) {
   try {
     await connectToDatabase()
 
+    console.log('userId from actions:', userId);
+    
     const user = await User.findById(userId)
-
+    console.log(user)
     if (!user) throw new Error('User not found')
     return JSON.parse(JSON.stringify(user))
   } catch (error) {

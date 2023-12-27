@@ -1,4 +1,3 @@
-import { getIdByClerkId } from '@/lib/actions/user.actions'
 import { IEvent } from '@/lib/database/models/event.model'
 import { formatDateTime } from '@/lib/utils'
 import { auth } from '@clerk/nextjs'
@@ -6,22 +5,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { DeleteConfirmation } from './DeleteConfirmation'
 
-
 type CardProps = {
   event: IEvent,
   hasOrderLink?: boolean,
   hidePrice?: boolean
 }
 
-const Card = async({ event, hasOrderLink, hidePrice }: CardProps) => {
-  const { userId } = auth();
-  const currentId=await getIdByClerkId(`${userId}`);
-  //const userId = sessionClaims?.userId as string;
-    // console.log("userid: " +userId);
-    // console.log("currentid: " +currentId);
-    // console.log("event: " +event.organizer._id.toString());
+const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId as string;
 
-  const isEventCreator = currentId === event.organizer._id.toString();
+  const isEventCreator = userId === event.organizer._id.toString();
 
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
