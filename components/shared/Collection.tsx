@@ -2,6 +2,7 @@ import { IEvent } from '@/lib/database/models/event.model'
 import Card from './Card'
 import Pagination from './Pagination'
 
+
 type CollectionProps = {
   data: IEvent[],
   emptyTitle: string,
