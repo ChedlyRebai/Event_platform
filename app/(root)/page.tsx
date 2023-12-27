@@ -1,7 +1,10 @@
 
+import CategoryFilter from "@/components/shared/Categoryfilter"
 import Collection from "@/components/shared/Collection"
 import Search from "@/components/shared/Search"
 import { Button } from "@/components/ui/button"
+import { getAllEvents } from "@/lib/actions/event.actions"
+import { SearchParamProps } from "@/types"
 
 import Image from "next/image"
 import Link from "next/link"
@@ -9,8 +12,11 @@ import Link from "next/link"
 
 
 
-const page = () => {
-  
+const page = async ({ searchParams }: SearchParamProps)=> {
+  const page = Number(searchParams?.page) || 1;
+  const searchText = (searchParams?.query as string) || '';
+  const category = (searchParams?.category as string) || '';
+
 
   const events = await getAllEvents({
     query: searchText,
@@ -50,7 +56,7 @@ const page = () => {
 
         <div className="flex w-full flex-col gap-5 md:flex-row">
         <Search />
-          <CategoryFilter />
+        <CategoryFilter />
         </div>
         <Collection 
           data={events?.data}
