@@ -16,6 +16,7 @@ import {
     GetRelatedEventsByCategoryParams,
     UpdateEventParams,
 } from '@/types'
+import { getIdByClerkId } from './user.actions'
 
 const getCategoryByName = async (name: string) => {
   return Category.findOne({ name: { $regex: name, $options: 'i' } })
@@ -32,7 +33,6 @@ export async function createEvent({ userId, event, path }: CreateEventParams) {
   try {
     await connectToDatabase()
     const organizer = await User.findOne({clerkId:userId})
-
 
     if (!organizer) throw new Error('Organizer not found')
 
@@ -67,7 +67,12 @@ export async function updateEvent({ userId, event, path }: UpdateEventParams) {
     await connectToDatabase()
 
     const eventToUpdate = await Event.findById(event._id)
-    if (!eventToUpdate || eventToUpdate.organizer.toHexString() !== userId) {
+    console.log(eventToUpdate)
+    console.log(userId)
+    const currentUser=await getIdByClerkId(userId)
+    console.log(currentUser)
+    console.log(eventToUpdate.organizer.toHexString())
+    if (!eventToUpdate || eventToUpdate.organizer.toHexString() !== currentUser) {
       throw new Error('Unauthorized or event not found')
     }
 
