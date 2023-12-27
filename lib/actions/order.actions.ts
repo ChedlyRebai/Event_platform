@@ -2,8 +2,7 @@
 
 import { CheckoutOrderParams, CreateOrderParams, GetOrdersByEventParams, GetOrdersByUserParams } from "@/types";
 import { ObjectId } from 'mongodb';
-import { redirect } from 'next/navigation';
-import Stripe from 'stripe';
+//import Stripe from 'stripe';
 import { connectToDatabase } from '../database';
 import Event from '../database/models/event.model';
 import Order from '../database/models/order.model';
@@ -11,7 +10,7 @@ import User from '../database/models/user.model';
 import { handleError } from '../utils';
 
 export const checkoutOrder = async (order: CheckoutOrderParams) => {
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+  /*const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
   const price = order.isFree ? 0 : Number(order.price) * 100;
 
@@ -41,7 +40,7 @@ export const checkoutOrder = async (order: CheckoutOrderParams) => {
     redirect(session.url!)
   } catch (error) {
     throw error;
-  }
+  }*/
 }
 
 export const createOrder = async (order: CreateOrderParams) => {
