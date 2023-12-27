@@ -9,7 +9,9 @@ type UpdateEventProps = {
 }
 
 const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
-    const { userId } = auth();
+  const { sessionClaims } = auth();
+
+  const userId = sessionClaims?.userId as string;
   const event = await getEventById(id)
 
   return (
@@ -23,7 +25,7 @@ const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
           type="Update" 
           event={event} 
           eventId={event._id} 
-          userId={`${userId}`} 
+          userId={userId} 
         />
       </div>
     </>

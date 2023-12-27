@@ -1,4 +1,5 @@
 'use client'
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { headerLinks } from '../../constant';
 
@@ -19,7 +20,10 @@ const NavItems = () => {
                         flex-center cursor-pointer p-meduim-16 whitespace-nowrap`
                     }
                     >
+                        <Link href={link.route}>
                         {link.label}
+                        </Link>
+                        
                     </li>
                 )
             })

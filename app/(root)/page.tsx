@@ -12,7 +12,7 @@ import Link from "next/link"
 
 
 
-const page = async ({ searchParams }: SearchParamProps)=> {
+export default async function Home({ searchParams }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
   const searchText = (searchParams?.query as string) || '';
   const category = (searchParams?.category as string) || '';
@@ -72,4 +72,3 @@ const page = async ({ searchParams }: SearchParamProps)=> {
   )
 }
 
-export default page
